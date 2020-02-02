@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+rm -f /usr/local/apache2/logs/httpd.pid
+chmod -R 777 /var/www/html/bootstrap/cache
+chmod -R 777 /var/www/html/storage
+
+exec apachectl -DFOREGROUND

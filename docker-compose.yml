@@ -1,0 +1,48 @@
+version: '2'
+services:
+    web:
+        build:
+            context: .
+        volumes:
+            - .:/var/www/html
+        links:
+            - db:mysql
+            - smtp
+        environment:
+            - VIRTUAL_HOST=laravel.docker
+        networks:
+            - proxy-tier
+    db:
+        image: mysql:5.7
+        volumes:
+            - ./.mysqldata:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        environment:
+            - MYSQL_DATABASE=laravel
+            - MYSQL_USER=laravel
+            - MYSQL_ROOT_PASSWORD=secret
+            - MYSQL_PASSWORD=secret
+        networks:
+            - proxy-tier
+    smtp:
+        image: tophfr/mailcatcher
+        ports:
+            - "8010:80"
+        networks:
+            - proxy-tier
+    proxy:
+        image: jwilder/nginx-proxy
+        container_name: massage-proxy
+        ports:
+            - "80:80"
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+        networks:
+            - proxy-tier
+
+
+networks:
+    proxy-tier:
+        external:
+            name: nginx-proxy
