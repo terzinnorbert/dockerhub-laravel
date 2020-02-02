@@ -1,8 +1,7 @@
 version: '2'
 services:
     web:
-        build:
-            context: .
+        image: norty/laravel
         volumes:
             - .:/var/www/html
         links:
@@ -33,7 +32,7 @@ services:
             - proxy-tier
     proxy:
         image: jwilder/nginx-proxy
-        container_name: massage-proxy
+        container_name: laravel-proxy
         ports:
             - "80:80"
         volumes:

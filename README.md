@@ -1,5 +1,13 @@
 # Docker and compose for Laravel development
 
+## Usage
+
+```
+cd your-laravel-application
+curl -LO https://raw.githubusercontent.com/terzinnorbert/dockerhub-laravel/master/docker-compose.yml
+docker-compose up
+```
+
 The docker-compose contains the following services:  
 
 * web - home of your laravel  
